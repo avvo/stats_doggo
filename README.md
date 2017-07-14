@@ -9,7 +9,7 @@
 ```elixir
 def deps do
   [
-    {:stats_doggo, "~> 0.1.0"},
+    {:stats_doggo, "~> 0.2.0"},
   ]
 end
 ```
