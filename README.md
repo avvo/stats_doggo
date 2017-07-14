@@ -8,7 +8,9 @@
 
 ```elixir
 def deps do
-  [{:stats_doggo, "~> 0.1.0"}]
+  [
+    {:stats_doggo, "~> 0.1.0"},
+  ]
 end
 ```
 
@@ -28,4 +30,9 @@ config :ex_vmstats,
   interval: 3000,
   use_histogram: true,
   sched_time: false
+```
+
+Add to your `endpoint.ex` if you want the plug:
+```
+  plug StatsDoggo.Plug
 ```
