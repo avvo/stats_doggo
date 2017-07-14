@@ -39,7 +39,7 @@ defmodule StatsDoggo.Mixfile do
 
   def application do
     [
-      mod: { StatsDoggo, [] },
+      mod: { StatsDoggo.Application, [] },
       extra_applications: [ :logger ],
     ]
   end
