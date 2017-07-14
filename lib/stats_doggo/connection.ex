@@ -1,0 +1,19 @@
+defmodule StatsDoggo.Connection do
+  use Statix, runtime_config: true
+
+  def init do
+    unless connected?() do
+      connect()
+    end
+    :ok
+  end
+
+  def connected? do
+    case Process.whereis(StatsDoggo.Connection) do
+      nil ->
+        false
+      _ ->
+        true
+    end
+  end
+end
