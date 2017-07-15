@@ -6,7 +6,7 @@ defmodule StatsDoggo.Mixfile do
 
   @deps [
     {:env_config, ">= 0.1.0"},
-    {:ex_vmstats, ">= 0.0.1"},
+    {:ex_vmstats, github: "dplummer/ex_vmstats", branch: "worker-config", runtime: false},
     {:plug, ">= 1.3.0"},
     {:statix, ">= 1.0.0"},
 
