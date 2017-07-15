@@ -11,7 +11,7 @@ defmodule StatsDoggo.Application do
 
     children = [
       worker(StatsDoggo.Worker, []),
-      worker(ExVmstats, [[namespace: namespace, backend: backend, use_histogram: false]]),
+      worker(StatsDoggo.Vmstats, [[namespace: namespace, backend: backend, use_histogram: false]]),
     ]
 
     opts = [strategy: :one_for_one, name: StatsDoggo.Supervisor]
