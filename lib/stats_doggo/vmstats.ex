@@ -39,7 +39,7 @@ defmodule StatsDoggo.Vmstats do
         use_histogram: kword_or_app(conf, :use_histogram, false),
         sched_time: sched_time(kword_or_app(conf, :sched_time, false)),
         prev_sched: prev_sched(),
-        timer_ref: ExVmstats.start_timer(interval),
+        timer_ref: StatsDoggo.Vmstats.start_timer(interval),
         prev_io: prev_io(),
         prev_gc: :erlang.statistics(:garbage_collection)
       }
@@ -138,15 +138,15 @@ defmodule StatsDoggo.Vmstats do
 
     gc = {gcs, words, _} = :erlang.statistics(:garbage_collection)
 
-    StatsDoggo.counter(metric_name.("io.bytes_in"), input - old_input)
-    StatsDoggo.counter(metric_name.("io.bytes_out"), output - old_output)
-    StatsDoggo.counter(metric_name.("gc.count"), gcs - old_gcs)
-    StatsDoggo.counter(metric_name.("gc.words_reclaimed"), words - old_words)
+    StatsDoggo.increment(metric_name.("io.bytes_in"), input - old_input)
+    StatsDoggo.increment(metric_name.("io.bytes_out"), output - old_output)
+    StatsDoggo.increment(metric_name.("gc.count"), gcs - old_gcs)
+    StatsDoggo.increment(metric_name.("gc.words_reclaimed"), words - old_words)
 
     # Reductions across the VM, excluding current time slice, already incremental
     {_, reds} = :erlang.statistics(:reductions)
 
-    StatsDoggo.counter(metric_name.("reductions"), reds)
+    StatsDoggo.increment(metric_name.("reductions"), reds)
 
     #Scheduler wall time
     sched =
@@ -157,8 +157,8 @@ defmodule StatsDoggo.Vmstats do
           for {sid, active, total} <- wall_time_diff(state.prev_sched, new_sched) do
             scheduler_metric_base = "#{namespace}.scheduler_wall_time.#{sid}"
 
-            StatsDoggo.timer(scheduler_metric_base <> ".active", active)
-            StatsDoggo.timer(scheduler_metric_base <> ".total", total)
+            StatsDoggo.timing(scheduler_metric_base <> ".active", active)
+            StatsDoggo.timing(scheduler_metric_base <> ".total", total)
           end
 
           new_sched
