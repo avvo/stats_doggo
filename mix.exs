@@ -2,7 +2,7 @@ defmodule StatsDoggo.Mixfile do
   use Mix.Project
 
   @name    :stats_doggo
-  @version "0.4.1"
+  @version "0.4.2"
 
   @deps [
     {:env_config, ">= 0.1.0"},
@@ -27,7 +27,7 @@ defmodule StatsDoggo.Mixfile do
     [
       app:     @name,
       version: @version,
-      elixir:  ">= 1.4.5",
+      elixir:  ">= 1.3.0",
       deps:    @deps,
       build_embedded:  in_production,
       package: package(),
