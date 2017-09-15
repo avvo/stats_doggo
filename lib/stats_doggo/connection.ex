@@ -1,4 +1,8 @@
 defmodule StatsDoggo.Connection do
+  @moduledoc """
+  StatsDoggo.Connection uses Statix to send metrics to a StatsD server.
+  """
+
   use Statix, runtime_config: true
 
   def init do

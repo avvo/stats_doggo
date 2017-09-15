@@ -52,7 +52,7 @@ defmodule StatsDoggo.Mixfile do
         "Donald Plummer <donald.plummer@gmail.com>"
       ],
       licenses: [
-        "MIT"
+        "Apache 2.0"
       ],
       links: %{
         "GitHub" => "https://github.com/avvo/stats_doggo",

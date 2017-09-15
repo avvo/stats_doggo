@@ -21,7 +21,7 @@ defmodule StatsDoggoTest do
   end
 
   test "can handle set" do
-    assert :ok = StatsDoggo.set("test string", 10)
+    assert :ok = StatsDoggo.set("test string", "user1")
   end
 
   test "can handle timing" do

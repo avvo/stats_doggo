@@ -1,7 +1,10 @@
 defmodule StatsDoggo.Vmstats do
   use GenServer
 
-  @doc """
+  @moduledoc """
+  StatsDoggo.Vmstats is a GenServer that periodically records BEAM virtual machine statistics to
+  StatsD.
+
   Copied and modified based on https://github.com/fanduel/ex_vmstats
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +23,8 @@ defmodule StatsDoggo.Vmstats do
   @timer_msg :interval_elapsed
 
   defmodule State do
+    @moduledoc false
+
     defstruct [
       :use_histogram,
       :interval,

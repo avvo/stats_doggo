@@ -1,4 +1,9 @@
 defmodule StatsDoggo.Plug do
+  @moduledoc """
+  StatsDoggo.Plug times each request and records the timing to StatsDoggo as
+  [app_name].web.response_time.
+  """
+
   @behaviour Plug
   import Plug.Conn, only: [register_before_send: 2]
 

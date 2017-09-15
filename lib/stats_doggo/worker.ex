@@ -1,4 +1,9 @@
 defmodule StatsDoggo.Worker do
+  @moduledoc """
+  StatsDoggo.Worker stores the running StatsDoggo connection info and forwards the request along
+  to the implementation.
+  """
+
   require Logger
   use GenServer
 
