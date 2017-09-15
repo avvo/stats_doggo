@@ -2,7 +2,7 @@ defmodule StatsDoggo.Mixfile do
   use Mix.Project
 
   @name    :stats_doggo
-  @version "0.4.2"
+  @version "0.4.3"
 
   @deps [
     {:env_config, ">= 0.1.0"},
