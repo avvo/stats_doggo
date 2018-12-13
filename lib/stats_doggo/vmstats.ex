@@ -1,5 +1,6 @@
 defmodule StatsDoggo.Vmstats do
   use GenServer
+  require Logger
 
   @moduledoc """
   StatsDoggo.Vmstats is a GenServer that periodically records BEAM virtual machine statistics to
@@ -122,9 +123,23 @@ defmodule StatsDoggo.Vmstats do
 
     # Error logger backlog (lower is better)
     error_logger_backlog =
-      Process.whereis(:error_logger)
-      |> Process.info(:message_queue_len)
-      |> elem(1)
+      case Process.whereis(:error_logger) do
+        nil ->
+          Process.whereis(Logger)
+          |> Process.info(:messages)
+          |> elem(1)
+          |> Enum.count(fn
+            {:notify, {:error, _, _}} ->
+              true
+            _ ->
+              false
+          end)
+
+        error_logger -> # Application is using legacy error_logger (pre OTP21)
+          error_logger
+          |> Process.info(:message_queue_len)
+          |> elem(1)
+      end
 
     gauge_or_hist(state, error_logger_backlog, metric_name.("error_logger_queue_len"))
 
