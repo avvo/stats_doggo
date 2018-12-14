@@ -1,6 +1,5 @@
 defmodule StatsDoggo.Vmstats do
   use GenServer
-  require Logger
 
   @moduledoc """
   StatsDoggo.Vmstats is a GenServer that periodically records BEAM virtual machine statistics to
