@@ -78,10 +78,10 @@ defmodule StatsDoggo.Vmstats do
         :erlang.system_flag(:scheduler_wall_time, true)
       else
         _ -> true
-      catch
-        _ -> true
       rescue
         ArgumentError -> false
+      catch
+        _ -> true
       end
     end
   end
