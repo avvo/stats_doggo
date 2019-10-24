@@ -15,15 +15,18 @@ defmodule StatsDoggo.Worker do
   def init(:ok) do
     set_up_config()
 
-    connection = case EnvConfig.get(:stats_doggo, :enabled) do
-      "false" ->
-        Logger.info "StatsDoggo disabled, using StatsDoggo.ConnectionMock"
-        StatsDoggo.ConnectionMock
-      x ->
-        impl = Application.fetch_env!(:stats_doggo, :impl)
-        Logger.info "StatsDoggo #{inspect(x)}, using #{inspect(impl)}"
-        impl
-    end
+    connection =
+      case EnvConfig.get(:stats_doggo, :enabled) do
+        "false" ->
+          Logger.info("StatsDoggo disabled, using StatsDoggo.ConnectionMock")
+          StatsDoggo.ConnectionMock
+
+        x ->
+          impl = Application.fetch_env!(:stats_doggo, :impl)
+          Logger.info("StatsDoggo #{inspect(x)}, using #{inspect(impl)}")
+          impl
+      end
+
     connection.init
 
     {:ok, connection}

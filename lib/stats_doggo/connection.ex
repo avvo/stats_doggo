@@ -9,6 +9,7 @@ defmodule StatsDoggo.Connection do
     unless connected?() do
       connect()
     end
+
     :ok
   end
 
@@ -16,6 +17,7 @@ defmodule StatsDoggo.Connection do
     case Process.whereis(StatsDoggo.Connection) do
       nil ->
         false
+
       _ ->
         true
     end

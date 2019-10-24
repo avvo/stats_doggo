@@ -1,15 +1,14 @@
 defmodule StatsDoggo.Mixfile do
   use Mix.Project
 
-  @name    :stats_doggo
+  @name :stats_doggo
   @version "0.4.4"
 
   @deps [
     {:env_config, ">= 0.1.0"},
     {:plug, ">= 1.3.0"},
     {:statix, ">= 1.0.0"},
-
-    {:ex_doc,  "~> 0.16", only: [ :dev, :test ]},
+    {:ex_doc, "~> 0.16", only: [:dev, :test]}
   ]
 
   @description """
@@ -23,30 +22,33 @@ defmodule StatsDoggo.Mixfile do
   # ------------------------------------------------------------
 
   def project do
-    in_production = Mix.env == :prod
+    in_production = Mix.env() == :prod
+
     [
-      app:     @name,
+      app: @name,
       version: @version,
-      elixir:  ">= 1.3.0",
-      deps:    @deps,
-      build_embedded:  in_production,
+      elixir: ">= 1.3.0",
+      deps: @deps,
+      build_embedded: in_production,
       package: package(),
       description: @description,
-      start_permanent: in_production,
+      start_permanent: in_production
     ]
   end
 
   def application do
     [
-      mod: { StatsDoggo.Application, [] },
-      extra_applications: [ :logger ],
+      mod: {StatsDoggo.Application, []},
+      extra_applications: [:logger]
     ]
   end
 
   defp package do
     [
       files: [
-        "lib", "mix.exs", "README.md"
+        "lib",
+        "mix.exs",
+        "README.md"
       ],
       maintainers: [
         "Donald Plummer <donald.plummer@gmail.com>"
@@ -55,7 +57,7 @@ defmodule StatsDoggo.Mixfile do
         "Apache 2.0"
       ],
       links: %{
-        "GitHub" => "https://github.com/avvo/stats_doggo",
+        "GitHub" => "https://github.com/avvo/stats_doggo"
       }
     ]
   end

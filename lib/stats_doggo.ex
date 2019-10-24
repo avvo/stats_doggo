@@ -4,9 +4,9 @@ defmodule StatsDoggo do
   for testing and development.
   """
 
-  @type key_t :: String.t
+  @type key_t :: String.t()
   @type value_t :: integer | float
-  @type options_t :: [sample_rate: float, tags: [String.t]]
+  @type options_t :: [sample_rate: float, tags: [String.t()]]
   @type on_send_t :: :ok
 
   @doc """
@@ -67,7 +67,8 @@ defmodule StatsDoggo do
       :ok
   """
   @spec gauge(key_t, value_t, options_t) :: on_send_t
-  def gauge(key, value, opts) when is_binary(key) and (is_float(value) or is_integer(value)) and is_list(opts) do
+  def gauge(key, value, opts)
+      when is_binary(key) and (is_float(value) or is_integer(value)) and is_list(opts) do
     GenServer.cast(StatsDoggo.Worker, {:gauge, [key, value, opts]})
   end
 
@@ -110,7 +111,7 @@ defmodule StatsDoggo do
   @doc """
   Same as `set(key, value, [])`
   """
-  @spec set(key_t, String.t) :: on_send_t
+  @spec set(key_t, String.t()) :: on_send_t
   def set(key, value), do: set(key, value, [])
 
   @doc """
@@ -120,7 +121,7 @@ defmodule StatsDoggo do
       iex> StatsDoggo.set("unique_visitors", "user1", [])
       :ok
   """
-  @spec set(key_t, String.t, options_t) :: on_send_t
+  @spec set(key_t, String.t(), options_t) :: on_send_t
   def set(key, value, opts) when is_binary(key) and is_binary(value) and is_list(opts) do
     GenServer.cast(StatsDoggo.Worker, {:set, [key, value, opts]})
   end
@@ -141,7 +142,8 @@ defmodule StatsDoggo do
       :ok
   """
   @spec timing(key_t, value_t, options_t) :: on_send_t
-  def timing(key, value, opts) when is_binary(key) and (is_integer(value) or is_float(value)) and is_list(opts) do
+  def timing(key, value, opts)
+      when is_binary(key) and (is_integer(value) or is_float(value)) and is_list(opts) do
     GenServer.cast(StatsDoggo.Worker, {:timing, [key, value, opts]})
   end
 
@@ -160,7 +162,8 @@ defmodule StatsDoggo do
       :ok
   """
   @spec histogram(key_t, value_t, options_t) :: on_send_t
-  def histogram(key, value, opts) when is_binary(key) and (is_integer(value) or is_float(value)) and is_list(opts) do
+  def histogram(key, value, opts)
+      when is_binary(key) and (is_integer(value) or is_float(value)) and is_list(opts) do
     GenServer.cast(StatsDoggo.Worker, {:histogram, [key, value, opts]})
   end
 end

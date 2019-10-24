@@ -3,9 +3,9 @@ defmodule StatsDoggoTest do
   doctest StatsDoggo
 
   test "can be initialized multiple times safely" do
-    StatsDoggo.Worker.init :ok
-    StatsDoggo.Worker.init :ok
-    assert {:ok, _} = StatsDoggo.Worker.init :ok
+    StatsDoggo.Worker.init(:ok)
+    StatsDoggo.Worker.init(:ok)
+    assert {:ok, _} = StatsDoggo.Worker.init(:ok)
   end
 
   test "can handle decrement" do

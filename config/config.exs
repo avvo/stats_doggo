@@ -7,6 +7,6 @@ config :stats_doggo,
   enabled: {:system, "STATS_ENABLED", "false"},
   impl: StatsDoggo.Connection
 
-if File.regular?("config/#{Mix.env}.exs") do
-  import_config "#{Mix.env}.exs"
+if File.regular?("config/#{Mix.env()}.exs") do
+  import_config "#{Mix.env()}.exs"
 end

@@ -12,7 +12,9 @@ defmodule VmStatsTest do
     send(stats_server_pid, {:timeout, "ref", :interval_elapsed})
   end
 
-  test "does not crash on OTP21 logger error message queue length", %{stats_server_pid: stats_server_pid} do
+  test "does not crash on OTP21 logger error message queue length", %{
+    stats_server_pid: stats_server_pid
+  } do
     send(stats_server_pid, {:timeout, "ref", :interval_elapsed})
   end
 end
