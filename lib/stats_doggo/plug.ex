@@ -7,7 +7,7 @@ defmodule StatsDoggo.Plug do
   @behaviour Plug
   import Plug.Conn, only: [register_before_send: 2]
 
-  @app_name EnvConfig.get(:stats_doggo, :app_name)
+  @app_name Application.get_env(:stats_doggo, :app_name)
   @timing_key "#{@app_name}.web.response_time"
 
   def init(opts), do: opts
