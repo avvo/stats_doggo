@@ -37,13 +37,13 @@ defmodule StatsDoggo.Vmstats do
     ]
 
     def new(conf \\ []) do
-      interval = Keyword.get(conf, :interval, 3000)
+      interval = interval = kword_or_app(conf, :interval, 3000)
 
       %__MODULE__{
         interval: interval,
-        namespace: Keyword.get(conf, :namespace, "vm_stats"),
-        use_histogram: Keyword.get(conf, :use_histogram, false),
-        sched_time: sched_time(Keyword.get(conf, :sched_time, false)),
+        namespace: kword_or_app(conf, :namespace, "vm_stats"),
+        use_histogram: kword_or_app(conf, :use_histogram, false),
+        sched_time: sched_time(kword_or_app(conf, :sched_time, false)),
         prev_sched: prev_sched(),
         timer_ref: StatsDoggo.Vmstats.start_timer(interval),
         prev_io: prev_io(),
@@ -68,6 +68,10 @@ defmodule StatsDoggo.Vmstats do
         {true, _} -> :disabled
         {false, _} -> :unavailable
       end
+    end
+
+    defp kword_or_app(conf, key, default) do
+      Application.get_env(:ex_vmstats, key, Keyword.get(conf, key, default))
     end
 
     defp sched_time_available? do
