@@ -37,7 +37,7 @@ defmodule StatsDoggo.Vmstats do
     ]
 
     def new(conf \\ []) do
-      interval = interval = kword_or_app(conf, :interval, 3000)
+      interval = kword_or_app(conf, :interval, 3000)
 
       %__MODULE__{
         interval: interval,
