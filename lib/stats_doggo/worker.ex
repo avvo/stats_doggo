@@ -7,11 +7,6 @@ defmodule StatsDoggo.Worker do
   require Logger
   use GenServer
 
-  @app_tag "app:#{Application.get_env(:stats_doggo, :app_name)}"
-  @env_tag "env:#{Application.get_env(:stats_doggo, :app_env)}"
-
-  @default_tags [@env_tag, @app_tag]
-
   def init(:ok) do
     set_up_config()
 
@@ -48,7 +43,10 @@ defmodule StatsDoggo.Worker do
   defp default_tags(nil), do: []
 
   defp default_tags(tags) do
-    @default_tags ++ tags
+    app_tag = "app:" <> Application.get_env(:stats_doggo, :app_name)
+    env_tag = "env:" <> Application.get_env(:stats_doggo, :app_env)
+
+    [env_tag, app_tag | tags]
   end
 
   defp set_up_config do
