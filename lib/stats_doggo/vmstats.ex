@@ -57,7 +57,8 @@ defmodule StatsDoggo.Vmstats do
     end
 
     defp prev_sched do
-      :erlang.statistics(:scheduler_wall_time)
+      :scheduler_wall_time
+      |> :erlang.statistics()
       |> Enum.sort()
     end
 

@@ -7,16 +7,11 @@ defmodule StatsDoggo.Worker do
   require Logger
   use GenServer
 
-  @app_tag "app:#{EnvConfig.get(:stats_doggo, :app_name)}"
-  @env_tag "env:#{EnvConfig.get(:stats_doggo, :app_env)}"
-
-  @default_tags [@env_tag, @app_tag]
-
   def init(:ok) do
     set_up_config()
 
     connection =
-      case EnvConfig.get(:stats_doggo, :enabled) do
+      case Application.get_env(:stats_doggo, :enabled) do
         "false" ->
           Logger.info("StatsDoggo disabled, using StatsDoggo.ConnectionMock")
           StatsDoggo.ConnectionMock
@@ -42,14 +37,19 @@ defmodule StatsDoggo.Worker do
   end
 
   defp default_opts(opts) do
-    opts |> Keyword.merge(tags: Keyword.get(opts, :tags, []) |> default_tags())
+    Keyword.merge(opts, tags: default_tags(opts[:tags]))
   end
 
+  defp default_tags(nil), do: []
+
   defp default_tags(tags) do
-    @default_tags ++ tags
+    app_tag = "app:" <> Application.get_env(:stats_doggo, :app_name)
+    env_tag = "env:" <> Application.get_env(:stats_doggo, :app_env)
+
+    [env_tag, app_tag | tags]
   end
 
   defp set_up_config do
-    Application.put_env(:statix, :host, EnvConfig.get(:stats_doggo, :override_statix_host))
+    Application.put_env(:statix, :host, Application.get_env(:stats_doggo, :override_statix_host))
   end
 end

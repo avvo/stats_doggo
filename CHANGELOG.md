@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 *Currently no unreleased changes*
 
+## [1.0.0] - 2019-11-12
+### Changed
+- removed EnvConfig dependency. Replaced `EnvConfig.get/2` with `Application.get_env/2`
+
 ## [0.4.4] - 2018-12-14
 ### Added
 - This changelog!
